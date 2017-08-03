@@ -34,13 +34,14 @@ app.post('/validate', (req, res) => {
   validator.validate(req.body, (err, message) => {
     if (err) {
       // Your message could not be validated.
-      res.status(500).json(err);
+      const result = err.message || err;
+      res.status(500).json({message : result});
       return;
     }
     res.status(200).json(message);
   });
 })
 
-app.listen(config.PORT, () => {
+app.listen(3000, () => {
   console.log('App listening on port 3000!')
 })

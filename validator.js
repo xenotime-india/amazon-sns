@@ -102,6 +102,8 @@ const validateUrl = (urlToValidate, hostPattern) => {
 };
 
 const getCertificate = (certUrl, cb) => {
+  console.log(certCache);
+  console.log(certUrl);
   if (certCache.hasOwnProperty(certUrl)) {
     cb(null, certCache[certUrl]);
     return;
@@ -113,9 +115,9 @@ const getCertificate = (certUrl, cb) => {
     if(res.statusCode !== 200){
       return cb(new Error('Certificate could not be retrieved'));
     }
-
     res
       .on('data', data => {
+        console.log(data);
         chunks.push(data.toString());
       })
       .on('end', () => {
@@ -146,12 +148,16 @@ const validateSignature = (message, cb, encoding) => {
   }
 
   getCertificate(message['SigningCertURL'], (err, certificate) => {
+    console.log(certificate);
+    console.log(message['Signature']);
     if (err) {
       cb(err);
       return;
     }
     try {
+      //console.log(verifier.verify(certificate, message['Signature'], 'base64'));
       if (verifier.verify(certificate, message['Signature'], 'base64')) {
+        console.log('OK');
         cb(null, message);
       } else {
         cb(new Error('The message signature is invalid.'));
