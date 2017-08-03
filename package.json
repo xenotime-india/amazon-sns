@@ -1,0 +1,17 @@
+{
+  "name": "amazon-sns",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "xenotime",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "config": "^1.26.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "sns-validator": "^0.3.1"
+  }
+}
