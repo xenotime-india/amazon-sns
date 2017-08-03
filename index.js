@@ -1,15 +1,13 @@
 /**
  * Created by sandeepkumar on 03/08/17.
  */
-const express = require('express');
-const config = require('config');
-const MessageValidator = require('sns-validator');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const helmet = require('helmet');
-const swaggerUi = require('swagger-ui-express');
-const swaggerJSDoc = require('swagger-jsdoc');
+import express from 'express';
+import config from 'config';
+import MessageValidator from './validator';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import helmet from 'helmet';
 
 const validator = new MessageValidator();
 const app = express();
@@ -32,8 +30,8 @@ if (!config.test) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/validate', function (req, res) {
-  validator.validate(req.body, function (err, message) {
+app.post('/validate', (req, res) => {
+  validator.validate(req.body, (err, message) => {
     if (err) {
       // Your message could not be validated.
       res.status(500).json(err);
@@ -43,6 +41,6 @@ app.post('/validate', function (req, res) {
   });
 })
 
-app.listen(config.PORT, function () {
+app.listen(config.PORT, () => {
   console.log('App listening on port 3000!')
 })
